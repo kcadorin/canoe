@@ -36,13 +36,13 @@ modules:
       enabled: true
       dns_name: app
       domain: dev.canoeintelligence.com
+      subject_alternative_names:
+        - "*.dev.canoeintelligence.com"
       name: canoe
       cluster_id: some_id
       container_name: app-canoe
       ecr_repository_url: 916296359902.dkr.ecr.us-east-1.amazonaws.com/canoe-development
-      task_role_arn: some_arn
       vpc_id: vpc-042eaa466a001f1cd
       health_check_matcher: "200-299,300-399,400-499"
       health_check_path: /healthcheck
       container_port: 3000
-      ssl_certificate_arn: some_arn

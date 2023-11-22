@@ -75,8 +75,8 @@ resource "aws_ecs_task_definition" "task_definition" {
   network_mode             = "awsvpc"
   cpu                      = "512"
   memory                   = "1024"
-  task_role_arn            = local.module_vars.task_role_arn
-  execution_role_arn       = local.module_vars.task_role_arn
+  task_role_arn            = aws_iam_role.task.arn
+  execution_role_arn       = aws_iam_role.task.arn
 }
 
 module "s3_bucket_for_logs" {
@@ -133,7 +133,7 @@ resource "aws_alb_listener" "https" {
   port              = "443"
   protocol          = "HTTPS"
   ssl_policy        = "ELBSecurityPolicy-TLS-1-2-2017-01"
-  certificate_arn   = local.module_vars.ssl_certificate_arn
+  certificate_arn   = aws_acm_certificate.main.arn
 
   default_action {
     type             = "forward"
