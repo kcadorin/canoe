@@ -97,7 +97,7 @@ module "s3_bucket_for_logs" {
 resource "aws_alb" "alb" {
   name               = local.module_vars.name
   load_balancer_type = "application"
-  subnets            = local.config.modules.vpc.vars.private_subnets
+  subnets            = local.config.modules.vpc.vars.public_subnets
   security_groups    = [aws_security_group.sg_lb.id]
 
   access_logs {
