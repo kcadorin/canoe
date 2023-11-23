@@ -6,6 +6,14 @@ version: '3'
 
 tasks:
 # State Bucket
+  init-state-bucket:
+    desc: Creates the tf state bucket
+    env:
+      TF_WORKSPACE: development
+    dir: ./terraform/init
+    cmds:
+      - terraform init
+
   plan-state-bucket:
     desc: Creates the tf state bucket
     env:
