@@ -35,15 +35,15 @@ The variables are configured inside the config folder, that means if we create d
 In this setup, to be able to start using terraform, the state bucket needs to be created, for that the code inside `terraform/init` folder must be executed before anything else with these commands:
 
 0. Set your AWS credentials using you preffered method (e.g `export AWS_PROFILE=<your-profile-name>`)
-1. `export TF_WORKSPACE=development`
+1. `export TF_WORKSPACE=development` (if using task this step is not needed).
 2. `terraform init` or `task init-state-bucket`
 3. `terraform plan` or `task plan-state-bucket`
 4. `terraform apply` or `task apply-state-bucket`
 
-To use this setup you can use these commands if you want to execute the code, it's important to follow this order to avoid unexpected errors:
+To use this setup manually you can use these commands if you want to execute the code, it's important to follow this order to avoid unexpected errors:
 
 0. Set your AWS credentials using you preffered method (e.g `export AWS_PROFILE=<your-profile-name>`)
-1. `export TF_WORKSPACE=development`
+1. `export TF_WORKSPACE=development` (if using task this step is not needed)
 2. `terraform init -backend-config=backend-"$TF_WORKSPACE".hcl`
 3. `terraform plan -var-file=backend-"$TF_WORKSPACE".hcl`
 4. `terraform apply -var-file=backend-"$TF_WORKSPACE".hcl`
@@ -63,10 +63,11 @@ To run the taskfile please install task app first
 
 Tasks:
 
-1. `task plan-state-bucket`
-2. `task apply-state-bucket`
-3. `task dev-init-all`
-4. `task dev-plan-all`
+1. `task init-state-bucket`
+2. `task plan-state-bucket`
+3. `task apply-state-bucket`
+4. `task dev-init-all`
+5. `task dev-plan-all`
 
 **The apply is not fully working because would incur in charges on my account, a few tweaks would be needed in order to be able to apply.**
 
