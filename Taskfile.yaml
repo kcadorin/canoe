@@ -1,0 +1,162 @@
+# to run the taskfile please install task app
+# https://taskfile.dev/installation/
+# on mac use:
+# brew install go-task/tap/go-task
+version: '3'
+
+tasks:
+# State Bucket
+  plan-state-bucket:
+    desc: Creates the tf state bucket
+    env:
+      TF_WORKSPACE: development
+    dir: ./terraform/init
+    cmds:
+      - terraform plan
+
+  apply-state-bucket:
+    desc: Creates the tf state bucket
+    env:
+      TF_WORKSPACE: development
+    dir: ./terraform/init
+    cmds:
+      - terraform apply
+
+# Run all tasks
+  dev-init-all:
+    desc: Run init on the core modules
+    env:
+      TF_WORKSPACE: development
+    cmds:
+      - task dev-init-vpc
+      - task dev-init-ecr
+      - task dev-init-ecs
+      - task dev-init-ecs_service
+
+  dev-plan-all:
+    desc: Run plan on the core modules
+    env:
+      TF_WORKSPACE: development
+    cmds:
+      - task dev-plan-vpc
+      - task dev-plan-ecr
+      - task dev-plan-ecs
+      - task dev-plan-ecs_service
+
+  dev-apply-all:
+    desc: Run plan on the core modules
+    env:
+      TF_WORKSPACE: development
+    cmds:
+      - task dev-apply-vpc
+      - task dev-apply-ecr
+      - task dev-apply-ecs
+      - task dev-apply-ecs_service
+
+# INIT modules
+  dev-init-vpc:
+    desc: Run init on the vpc
+    env:
+      TF_WORKSPACE: development
+    dir: ./terraform/core/vpc
+    cmds:
+      - terraform init -backend-config=backend-"$TF_WORKSPACE".hcl
+
+  dev-init-ecr:
+    desc: Run init on the ecr
+    env:
+      TF_WORKSPACE: development
+    dir: ./terraform/core/ecr
+    cmds:
+      - terraform init -backend-config=backend-"$TF_WORKSPACE".hcl
+
+  dev-init-ecs:
+    desc: Run init on the ecs
+    env:
+      TF_WORKSPACE: development
+    dir: ./terraform/core/ecs
+    cmds:
+      - terraform init -backend-config=backend-"$TF_WORKSPACE".hcl
+
+  dev-init-ecs_service:
+    desc: Run init on the ecs_service
+    env:
+      TF_WORKSPACE: development
+    dir: ./terraform/core/ecs_service
+    cmds:
+      - terraform init -backend-config=backend-"$TF_WORKSPACE".hcl
+
+# Plan individual modules
+
+  dev-plan-vpc:
+    desc: Run plan on the vpc
+    env:
+      TF_WORKSPACE: development
+    dir: ./terraform/core/vpc
+    cmds:
+      - terraform plan -var-file=backend-"$TF_WORKSPACE".hcl
+
+  dev-plan-ecr:
+    desc: Run plan on the ecr
+    env:
+      TF_WORKSPACE: development
+    dir: ./terraform/core/ecr
+    cmds:
+      - terraform plan -var-file=backend-"$TF_WORKSPACE".hcl
+
+  dev-plan-ecs:
+    desc: Run plan on the ecs
+    env:
+      TF_WORKSPACE: development
+    dir: ./terraform/core/ecs
+    cmds:
+      - terraform plan -var-file=backend-"$TF_WORKSPACE".hcl
+
+  dev-plan-ecs_service:
+    desc: Run plan on the ecs_service
+    env:
+      TF_WORKSPACE: development
+    dir: ./terraform/core/ecs_service
+    cmds:
+      - terraform plan -var-file=backend-"$TF_WORKSPACE".hcl
+
+# Apply individual modules
+
+  dev-apply-vpc:
+    desc: Run apply on the vpc
+    env:
+      TF_WORKSPACE: development
+    dir: ./terraform/core/vpc
+    cmds:
+      - terraform apply -var-file=backend-"$TF_WORKSPACE".hcl
+
+  dev-apply-ecr:
+    desc: Run apply on the ecr
+    env:
+      TF_WORKSPACE: development
+    dir: ./terraform/core/ecr
+    cmds:
+      - terraform apply -var-file=backend-"$TF_WORKSPACE".hcl
+
+  dev-apply-ecs:
+    desc: Run apply on the ecs
+    env:
+      TF_WORKSPACE: development
+    dir: ./terraform/core/ecs
+    cmds:
+      - terraform apply -var-file=backend-"$TF_WORKSPACE".hcl
+
+  dev-apply-ecs_service:
+    desc: Run apply on the ecs_service
+    env:
+      TF_WORKSPACE: development
+    dir: ./terraform/core/ecs_service
+    cmds:
+      - terraform apply -var-file=backend-"$TF_WORKSPACE".hcl
+
+  # Delete . terraform
+  delete-terraform:
+    desc: Delete .terraform folders
+    dir: ./scripts
+    cmds:
+      - ./delete_terraform.sh
